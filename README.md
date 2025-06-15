@@ -70,6 +70,39 @@ By automating deployments to test and production environments, Jenkins supports 
 ![port-8080](./img/port-8080.png)
 
 
+
 >> I SET UP JENKINS THE WEB CONSOLE, INSTALLED SUGGESTED PLUGINS, CREATED A USER ACCOUNT, AND SUCCESSFULLY LOGGED IN TO JENKINS CONSOLE
 
-![jenkins](./img/jenkins.png)
+************************************************
+
+>>> RAN MY FIRST BUILD, FREESTLYE JOB AND PIPELINE 
+
+ ***************************************************
+
+ > CREATED WEBHOOK ON GITHUB
+
+![webhook-created](./img/webhook-created.png)
+
+
+***************************************************
+
+
+![webhook-backend](./img/webhook-backend.png)
+
+
+>> MY FIRST BUILD
+
+![my-first-job](./img/my-first-job-dashboard.png)
+
+>> MY FIRST BUILD
+
+![first-build](./img/my-first-build.png)
+
+
+>> JENKINS DASHBOARD AFTER SUCCESSFUL BUILDS 
+
+
+![jenkins-dashboard](./img/jenkins.png)
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
