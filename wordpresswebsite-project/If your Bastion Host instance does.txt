@@ -1,0 +1,52 @@
+If your Bastion Host instance does not have a public IP address, it won't be accessible from the internet, which is why you're unable to connect. Here are the steps to ensure your Bastion Host has a public IP address and is properly configured:
+
+### Step 1: Check Subnet Settings
+
+1. **Verify Subnet Configuration**:
+    - Go to the **VPC Dashboard** in the AWS Management Console.
+    - Click on **Subnets** in the left sidebar.
+    - Find the subnet where your Bastion Host is launched and check if it is a public subnet. A public subnet is one that has a route to an Internet Gateway.
+2. **Modify Subnet if Necessary**:
+    - If the subnet is not public, you can either:
+        - Launch the Bastion Host in a different public subnet.
+        - Modify the existing subnet to make it public by adding a route to an Internet Gateway.
+
+### Step 2: Launch a New Bastion Host with Public IP
+
+If you need to launch a new Bastion Host, follow these steps:
+
+1. **Terminate the Existing Instance** (if you don't need it):
+    - Go to the **Instances** section in the EC2 Dashboard.
+    - Select your Bastion Host instance and click on **Actions** > **Instance State** > **Terminate**.
+2. **Launch a New Instance**:
+    - Click on **Launch Instance**.
+    - Choose the **Amazon Linux 2 AMI**.
+    - Select an instance type (e.g., `t2.micro`).
+    - In the **Configure Instance Details** step, ensure that:
+        - You select a **public subnet**.
+        - Check the option for **Auto-assign Public IP** (set to "Enable").
+    - Continue with the rest of the steps, ensuring you select the security group you created earlier (`BastionHostSG`).
+
+### Step 3: Verify Security Group Settings
+
+1. **Check Inbound Rules**:
+    - Ensure that the security group associated with your Bastion Host allows inbound SSH (port 22) from your IP address.
+
+### Step 4: Connect to the Bastion Host
+
+1. Once the new instance is running, note its **Public IP address**.
+2. Use the following command to SSH into your Bastion Host:
+```
+bashssh -i /path/to/your-key.pem ec2-user@<Bastion-Host-Public-IP>
+```
+
+### Step 5: Access Private EC2 Instances
+
+Once you are connected to the Bastion Host, you can SSH into your private EC2 instances using their private IP addresses.
+
+### Additional Notes
+
+- If you want to keep your existing Bastion Host instance and just add a public IP, you cannot directly assign a public IP to an existing instance. You would need to create a new instance in a public subnet with the public IP enabled.
+- Ensure that your local firewall or network settings allow outbound SSH connections.
+
+If you follow these steps and ensure that your Bastion Host is in a public subnet with a public IP, you should be able to connect successfully. If you encounter any issues, feel free to ask for further assistance!
