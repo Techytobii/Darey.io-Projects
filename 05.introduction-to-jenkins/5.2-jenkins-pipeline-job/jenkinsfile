@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t dockerfile .'
+                    sh 'docker build -t myapp:latest .'
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -itd -p 8081:80 dockerfile'
+                    sh 'docker run -itd -p 8081:80 myapp:latest'
                 }
             }
         }
