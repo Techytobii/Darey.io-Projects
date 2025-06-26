@@ -18,8 +18,11 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Use the correct relative path to the Dockerfile
-                    bat 'docker build -t myapp:latest -f 5.2-jenkins-pipeline-job/Dockerfile 5.2-jenkins-pipeline-job'
+                    bat '''
+                        docker build -t myapp:latest ^
+                        -f 5.2-jenkins-pipeline-job/Dockerfile ^
+                        5.2-jenkins-pipeline-job
+                    '''
                 }
             }
         }
