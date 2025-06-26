@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Connect To Github') {
+        stage('Connect to GitHub') {
             steps {
                 checkout scmGit(
                     branches: [[name: '*/main']],
                     extensions: [],
                     userRemoteConfigs: [[
                         credentialsId: '86b7afca-b969-47ef-9401-59012d947367',
-                        url: 'https://github.com/Techytobii/jenkins-scm.git'
+                        url: 'https://github.com/Techytobii/Darey.io-Projects.git'
                     ]]
                 )
             }
@@ -26,8 +26,8 @@ pipeline {
                 script {
                     bat '''
                         docker build -t myapp:latest ^
-                        -f 5.2-jenkins-pipeline-job/Dockerfile ^
-                        .
+                        -f 05.introduction-to-jenkins/5.2-jenkins-pipeline-job/Dockerfile ^
+                        05.introduction-to-jenkins/5.2-jenkins-pipeline-job
                     '''
                 }
             }
