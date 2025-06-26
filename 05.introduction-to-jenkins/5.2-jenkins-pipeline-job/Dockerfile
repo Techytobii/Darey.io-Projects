@@ -1,30 +1,26 @@
-# 1. Update the package index
-sudo apt-get update -y
+FROM ubuntu:24.04
 
-# 2. Install required packages
-sudo apt-get install -y ca-certificates curl gnupg
+# 1. Update the package index and install required packages
+RUN apt-get update -y && \
+    apt-get install -y ca-certificates curl gnupg
 
-# 3. Create keyring directory
-sudo install -m 0755 -d /etc/apt/keyrings
+# 2. Create keyring directory
+RUN install -m 0755 -d /etc/apt/keyrings
 
-# 4. Add Docker’s official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+# 3. Add Docker’s official GPG key
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
-# 5. Set permissions
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
+# 4. Set permissions
+RUN chmod a+r /etc/apt/keyrings/docker.gpg
 
-# 6. Add Docker repository
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-  https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# 5. Add Docker repository
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+    https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" \
+    > /etc/apt/sources.list.d/docker.list
 
-# 7. Update again after adding the Docker repo
-sudo apt-get update -y
+# 6. Update again after adding the Docker repo
+RUN apt-get update -y
 
-# 8. Install Docker Engine, CLI, Containerd, Buildx, and Compose plugin
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-# 9. Optional: Check Docker status
-sudo systemctl status docker
+# 7. Install Docker Engine, CLI, Containerd, Buildx, and Compose plugin
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
