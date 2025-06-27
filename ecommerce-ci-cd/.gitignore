@@ -1,0 +1,24 @@
+# System files
+*.swp
+*.log
+*.tmp
+*.bak
+
+# Docker
+*.tar
+*.gz
+
+# Python (if added later)
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# IDEs
+.vscode/
+.idea/
+
+# Credentials
+.env
