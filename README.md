@@ -128,6 +128,66 @@ EXPOSE 80
 ```
 
 
+## 🛠️ Jenkins Freestyle Project (Alternative Approach)
+
+In addition to the Pipeline-as-Code method, this project can also be implemented using a **Jenkins Freestyle Project**. This approach is useful for beginners or for simple automation tasks.
+
+### 📝 Freestyle Project Steps
+
+1. **Create a New Freestyle Project** in Jenkins.
+![jkns-newitem](/ci-cd-mastery/jenkins-scm/img/jenkins-dashboard.png)
+
+
+
+2. **Configure Source Code Management**  
+   - Select "Git" and provide your repository URL.
+![git](/ci-cd-mastery/jenkins-scm/img/added-jkns-scmgt.png)
+
+
+
+3. **Add Build Steps**
+
+   - **Execute Shell** (Linux) or **Execute Windows batch command** (Windows):
+     - Build Docker image:
+       ```bat
+       docker build -t yourdockerhubusername/ci-cd-mastery-app .
+       ```
+     - Push Docker image:
+       ```bat
+       echo $DOCKERHUB_PASSWORD | docker login -u yourdockerhubusername --password-stdin
+       docker push yourdockerhubusername/ci-cd-mastery-app
+       ```
+     - Deploy container:
+       ```bat
+       docker rm -f ecommerce-container || true
+       docker run -d -p 8081:80 --name ecommerce-container yourdockerhubusername/ci-cd-mastery-app
+       ```
+
+4. **Add Credentials**  
+
+   - Use Jenkins Credentials Manager to securely store your Docker Hub password or PAT.
+   ![dockerPAt](/ci-cd-mastery/img/12.PAT-docker.png)
+
+
+5. **Build Triggers**  
+   - Optionally, enable "Build periodically" or "GitHub hook trigger" for automation.
+
+   - payload url
+   ![payloadurl](/ci-cd-mastery/jenkins-scm/img/payload-url.png)
+
+   - webhook created and activated 
+   ![webhook](/ci-cd-mastery/jenkins-scm/img/webhook-created.png)
+
+   - ![build-triggerjkns](/ci-cd-mastery/jenkins-scm/img/build-trigger.png)
+
+   - build triggered
+   ![build-triggered](/ci-cd-mastery/jenkins-scm/img/first-build.png)
+
+
+### 🖼️ Freestyle Project Success
+- ![build-success](/ci-cd-mastery/jenkins-scm/img/changes-in-jkns.png)
+
+
 ### ⚠️ Challenges Encountered
 
 Jenkins build initially failed with script returned exit code 1
