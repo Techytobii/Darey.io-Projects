@@ -1,24 +1,14 @@
-# System files
-*.swp
 *.log
 *.tmp
+*.swp
 *.bak
-
-# Docker
-*.tar
-*.gz
-
-# Python (if added later)
-venv/
+*.env
+node_modules/
 __pycache__/
 *.pyc
-
-# Node
-node_modules/
-
-# IDEs
+*.DS_Store
+*.tar
+*.tar.gz
+*.zip
+*.idea/
 .vscode/
-.idea/
-
-# Credentials
-.env

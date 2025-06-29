@@ -10,4 +10,5 @@ COPY app/ /usr/share/nginx/html
 # Expose port 80 (standard HTTP port)
 EXPOSE 80
 
-# Start nginx server (default CMD for nginx:alpine already does this)
+# (Optional) Healthcheck for Nginx
+# HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost/ || exit 1
