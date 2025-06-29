@@ -1,0 +1,14 @@
+*.log
+*.tmp
+*.swp
+*.bak
+*.env
+node_modules/
+__pycache__/
+*.pyc
+*.DS_Store
+*.tar
+*.tar.gz
+*.zip
+*.idea/
+.vscode/
