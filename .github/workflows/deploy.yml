@@ -26,9 +26,13 @@ jobs:
         sleep 5
         curl -f http://localhost:3000
 
+    - name: Set lowercase repository owner
+      id: repo_owner
+      run: echo "owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
     - name: Dockerize the App
       run: |
-        docker build -t ghcr.io/${{ github.repository_owner.toLowerCase() }}/node-app .
+        docker build -t ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app .
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v3
@@ -39,5 +43,5 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker tag ghcr.io/${{ github.repository_owner.toLowerCase() }}/node-app ghcr.io/${{ github.repository_owner.toLowerCase() }}/node-app:latest
-        docker push ghcr.io/${{ github.repository_owner.toLowerCase() }}/node-app:latest
+        docker tag ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app:latest
+        docker push ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app:latest
