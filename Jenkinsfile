@@ -19,8 +19,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    dockerImage = docker.build("${IMAGE_NAME}:latest")
+                dir('ecommerce-ci-cd') {
+                    script {
+                        dockerImage = docker.build("${IMAGE_NAME}:latest")
+                    }
                 }
             }
         }
