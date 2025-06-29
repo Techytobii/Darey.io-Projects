@@ -26,13 +26,15 @@ jobs:
         sleep 5
         curl -f http://localhost:3000
 
-    - name: Set lowercase repository owner
-      id: repo_owner
-      run: echo "owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+    - name: Set lowercase repo owner and name
+      id: repo_vars
+      run: |
+        echo "owner=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+        echo "repo=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
     - name: Dockerize the App
       run: |
-        docker build -t ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app .
+        docker build -t ghcr.io/${{ steps.repo_vars.outputs.owner }}/${{ steps.repo_vars.outputs.repo }}-app .
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v3
@@ -43,5 +45,5 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker tag ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app:latest
-        docker push ghcr.io/${{ steps.repo_owner.outputs.owner }}/node-app:latest
+        docker tag ghcr.io/${{ steps.repo_vars.outputs.owner }}/${{ steps.repo_vars.outputs.repo }}-app ghcr.io/${{ steps.repo_vars.outputs.owner }}/${{ steps.repo_vars.outputs.repo }}-app:latest
+        docker push ghcr.io/${{ steps.repo_vars.outputs.owner }}/${{ steps.repo_vars.outputs.repo }}-app:latest
