@@ -40,7 +40,7 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 script {
-                    sh '''
+                    bat '''
                         docker stop ecommerce-container || true
                         docker rm ecommerce-container || true
                         docker run -d -p 8081:80 --name ecommerce-container great2005/ci-cd-mastery-app:latest
@@ -53,7 +53,7 @@ pipeline {
     post {
         always {
             script {
-                sh 'docker system prune -f'
+                bat 'docker system prune -f'
             }
         }
         success {
