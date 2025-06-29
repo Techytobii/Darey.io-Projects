@@ -12,5 +12,12 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ghcr.io/techytobii/node-app"
+  },
+  "docker": {
+    "image": "ghcr.io/techytobii/node-app"
   }
 }
