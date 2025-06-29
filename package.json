@@ -3,21 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "echo \"No tests yet\" && exit 0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^4.18.2"
   },
   "repository": {
     "type": "git",
-    "url": "ghcr.io/techytobii/node-app"
-  },
-  "docker": {
-    "image": "ghcr.io/techytobii/node-app"
+    "url": "https://github.com/Techytobii/ci-cd-mastery.git"
   }
 }
