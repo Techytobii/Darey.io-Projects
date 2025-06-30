@@ -1,7 +1,48 @@
-name: Build and Push Docker Image to GHCR
+name: Build, Push, and Deploy to EC2
 
 on:
   push:
+    branches: [ main ]  # Trigger only when you push to main branch
+
+permissions:
+  contents: read
+  packages: write  # Needed to push to GHCR
+
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Log in to GitHub Container Registry (GHCR)
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build Docker Image
+      run: |
+        docker build -t ghcr.io/techytobii/node-app .
+
+    - name: Push Docker Image to GHCR
+      run: |
+        docker push ghcr.io/techytobii/node-app
+
+    - name: Deploy to EC2 via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker stop node-app || true
+          docker rm node-app || true
+          docker pull ghcr.io/techytobii/node-app:latest
+          docker run -d --name node-app -p 80:3000 ghcr.io/techytobii/node-app:latest
+branches: [ main ]  # or change to your working branch
     branches: [ main ]  # or change to your working branch
 
 permissions:
