@@ -1,35 +1,36 @@
-name: Build, Push, and Deploy to EC2
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: read
-  packages: write
+    branches: [main]
 
 jobs:
-  build-push-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
 
     - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    - name: Build Docker Image
-      run: |
-        docker build -t ghcr.io/techytobii/node-app .
+    - name: Build Docker image
+      run: docker build -t ghcr.io/${{ github.repository_owner }}/node-app:latest .
 
-    - name: Push Docker Image
-      run: |
-        docker push ghcr.io/techytobii/node-app
+    - name: Push image to GHCR
+      run: docker push ghcr.io/${{ github.repository_owner }}/node-app:latest
 
     - name: Deploy to EC2 via SSH
       uses: appleboy/ssh-action@v1.0.0
@@ -40,5 +41,5 @@ jobs:
         script: |
           docker stop node-app || true
           docker rm node-app || true
-          docker pull ghcr.io/techytobii/node-app:latest
-          docker run -d --name node-app -p 80:3000 ghcr.io/techytobii/node-app:latest
+          docker pull ghcr.io/${{ github.repository_owner }}/node-app:latest
+          docker run -d --name node-app -p 80:3000 ghcr.io/${{ github.repository_owner }}/node-app:latest
