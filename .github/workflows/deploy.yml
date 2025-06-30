@@ -42,4 +42,3 @@ jobs:
           docker rm node-app || true
           docker pull ghcr.io/techytobii/node-app:latest
           docker run -d --name node-app -p 80:3000 ghcr.io/techytobii/node-app:latest
-
