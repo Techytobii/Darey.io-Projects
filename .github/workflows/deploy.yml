@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout code
+      - name: ⬇️ Checkout source code
         uses: actions/checkout@v4
 
-      - name: 🔐 Log in to GHCR
+      - name: 🔐 Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -26,3 +26,20 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/techytobii/introduction-to-ci-cd:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 SSH and deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ghcr.io/techytobii/introduction-to-ci-cd:latest
+            docker stop node-app || true
+            docker rm node-app || true
+            docker run -d --name node-app -p 80:3000 ghcr.io/techytobii/introduction-to-ci-cd:latest
