@@ -15,7 +15,11 @@
   },
   "repository": {
     "type": "git",
+<<<<<<< HEAD
     "url": "https://github.com/Techtobii/introduction-to-ci-cd.git"
+=======
+    "url": "https://github.com/Techytobii/introduction-to-ci-cd"
+>>>>>>> 55b55277f95c6746ed2e97ea35727a54c3ee4226
   },
   "devDependencies": {
     "jest": "^30.0.3",
