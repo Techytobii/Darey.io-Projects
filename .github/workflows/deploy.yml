@@ -17,16 +17,23 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: List node_modules/.bin
+        run: ls -la node_modules/.bin
+
+      - name: Fix eslint permissions
+        run: chmod +x ./node_modules/.bin/eslint
 
       - name: Run ESLint
         run: npx eslint .
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          organization: techytobii
-          token: ${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: techytobii_introduction-to-ci-cd
+          SONAR_ORGANIZATION: techytobii
 
   build-and-push:
     needs: lint-and-sonar
