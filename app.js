@@ -1,8 +1,11 @@
-const express = require("express");
+import express from "express";
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Node.js CI/CD!");
+  res.send("Hello World");
 });
 
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
