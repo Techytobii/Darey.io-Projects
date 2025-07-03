@@ -6,21 +6,31 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  lint-and-sonar:
     runs-on: ubuntu-latest
-
     steps:
-<<<<<<< HEAD
-      - name: ⬇️ Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 🔐 Log in to GHCR
-        uses: docker/login-action@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-=======
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npx eslint .
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build-and-push:
+    needs: lint-and-sonar
+    runs-on: ubuntu-latest
+    steps:
       - name: ⬇️ Checkout source code
         uses: actions/checkout@v4
 
@@ -30,7 +40,6 @@ jobs:
           registry: ghcr.io
           username: techytobii
           password: ${{ secrets.GHCR_PAT }}
->>>>>>> 55b55277f95c6746ed2e97ea35727a54c3ee4226
 
       - name: 🐳 Build and push Docker image
         uses: docker/build-push-action@v5
@@ -38,13 +47,10 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/techytobii/introduction-to-ci-cd:latest
-<<<<<<< HEAD
-=======
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-
     steps:
       - name: 🚀 SSH and deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -57,4 +63,3 @@ jobs:
             docker stop node-app || true
             docker rm node-app || true
             docker run -d --name node-app -p 80:3000 ghcr.io/techytobii/introduction-to-ci-cd:latest
->>>>>>> 55b55277f95c6746ed2e97ea35727a54c3ee4226

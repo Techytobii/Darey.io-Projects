@@ -10,7 +10,7 @@
 
 ## Repository:
 
->> [https://github.com/Techytobii/introduction-to-ci-cd](https://github.com/Techytobii/introduction-to-ci-cd)
+> > [https://github.com/Techytobii/introduction-to-ci-cd](https://github.com/Techytobii/introduction-to-ci-cd)
 
 ---
 
@@ -39,31 +39,29 @@ This project demonstrates a complete end-to-end CI/CD pipeline using GitHub Acti
 
 ### 2. Tools and Technologies
 
-* Git & GitHub
-* GitHub Actions
-* Docker
-* GitHub Container Registry (GHCR)
-* AWS EC2 (Ubuntu)
-* SSH
+- Git & GitHub
+- GitHub Actions
+- Docker
+- GitHub Container Registry (GHCR)
+- AWS EC2 (Ubuntu)
+- SSH
 
 ---
 
 #### Step 1: Initialized a Github Repository
 
-* Created a new repository on Github
+- Created a new repository on Github
 
-* 📸 ![new-repo](./img/01.repo-created.png)
+- 📸 ![new-repo](./img/01.repo-created.png)
 
-
-* Cloned it into the local machine
-* 📸 ![cloned-repo](./img/02.cloned-repo.png)
-
+- Cloned it into the local machine
+- 📸 ![cloned-repo](./img/02.cloned-repo.png)
 
 #### Step 2: Initialize Node.js Application
 
-* Created files: `app.js`, `index.js`, `package.json`
+- Created files: `app.js`, `index.js`, `package.json`
 
-* 📸 ![app-js](./img/05.created-app-js.png)
+- 📸 ![app-js](./img/05.created-app-js.png)
 
 ```
 {
@@ -92,8 +90,8 @@ This project demonstrates a complete end-to-end CI/CD pipeline using GitHub Acti
 
 ```
 
-* Index.js
-![index-js](./img/index-js.png)
+- Index.js
+  ![index-js](./img/index-js.png)
 
 ```
 const app = require('./app');
@@ -104,9 +102,8 @@ app.listen(port, () => {
 });
 ```
 
-
-* Package.js
-![package-js](./img/07.start-added.png)
+- Package.js
+  ![package-js](./img/07.start-added.png)
 
 ```
 {
@@ -135,15 +132,14 @@ app.listen(port, () => {
 }
 ```
 
-
-* Installed Express dependency
+- Installed Express dependency
 
 ```bash
 npm init -y
 npm install express
 ```
 
-* 📷 ![npm](./img/03.npm-init.png)
+- 📷 ![npm](./img/03.npm-init.png)
 
 ---
 
@@ -161,8 +157,7 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 
-* 📷 ![docker](./img/08.docker-created.png)
-
+- 📷 ![docker](./img/08.docker-created.png)
 
 #### Step 3: Build and Run Docker Locally
 
@@ -171,14 +166,14 @@ docker build -t node-app .
 docker run -d -p 80:3000 node-app
 ```
 
-* 📷 ![docker-build](./img/18.bld-node-app.png)
+- 📷 ![docker-build](./img/18.bld-node-app.png)
 
 ---
 
 #### Step 4: Push to GitHub Repository
 
-* Created repo: `introduction-to-ci-cd`
-* Connected local folder to remote and pushed code
+- Created repo: `introduction-to-ci-cd`
+- Connected local folder to remote and pushed code
 
 ```bash
 git init
@@ -187,7 +182,7 @@ git add . && git commit -m "initial commit"
 git push -u origin main
 ```
 
-* 📷 ![code-pushed](./img/12.code-pushed.png)
+- 📷 ![code-pushed](./img/12.code-pushed.png)
 
 ---
 
@@ -195,10 +190,9 @@ git push -u origin main
 
 **Path:** `.github/workflows/deploy.yml`
 
-* ![ghworkflows](./img/09.ghwrkflws.png)
+- ![ghworkflows](./img/09.ghwrkflws.png)
 
-
-* deploy.yml code
+- deploy.yml code
 
 ```yaml
 name: CI/CD Workflow
@@ -227,26 +221,24 @@ jobs:
           tags: ghcr.io/techytobii/introduction-to-ci-cd:latest
 ```
 
-* 📷 ![deploy](./img/11.deploy-contnt.png)
+- 📷 ![deploy](./img/11.deploy-contnt.png)
 
-
-* 📷 ![code-pushed](./img/17.wrkflw-success.png)
-
+- 📷 ![code-pushed](./img/17.wrkflw-success.png)
 
 ---
 
 ### 4. Challenges & Solutions (Part A)
 
-**Challenge 1:** 
+**Challenge 1:**
 GitHub Actions push to GHCR denied
 
-* 📷 ![error](./img/ghcrerror.png)
+- 📷 ![error](./img/ghcrerror.png)
 
 **Solution:** Created and used PAT with `write:packages` scope
 
 **Challenge 2:** GHCR rejected uppercase repo names
 
-* 📷 ![Error](./img/lowercase-error.png)
+- 📷 ![Error](./img/lowercase-error.png)
 
 **Solution:** Used lowercase naming in image tag
 
@@ -256,40 +248,36 @@ GitHub Actions push to GHCR denied
 
 ### 1. EC2 Setup (Two Instances)
 
-* Launched **Primary EC2 Instance** (Ubuntu 22.04) for production
-![ubuntu](./img/02.ssh-ubuntu.png)
+- Launched **Primary EC2 Instance** (Ubuntu 22.04) for production
+  ![ubuntu](./img/02.ssh-ubuntu.png)
 
-* Launched **Secondary EC2 Instance** for recovery
+- Launched **Secondary EC2 Instance** for recovery
 
-* Created security groups to allow SSH (port 22) and HTTP (port 80)
-![port](./img/01.ec2-sg.png)
+- Created security groups to allow SSH (port 22) and HTTP (port 80)
+  ![port](./img/01.ec2-sg.png)
 
+- SSH access tested using `.pem` file
 
-* SSH access tested using `.pem` file
-
-
-* Installed Docker on both instances
+- Installed Docker on both instances
 
 ```bash
 sudo apt update && sudo apt install docker.io -y
 sudo usermod -aG docker ubuntu
 ```
 
-* 📷 ![docker-depedencies](./img/docker-depend.png)
+- 📷 ![docker-depedencies](./img/docker-depend.png)
 
-
-* 📷 ![docker-repo](./img/installed-docker.png)
+- 📷 ![docker-repo](./img/installed-docker.png)
 
 ---
 
 ### 2. Setup Recovery Access and Data Rescue (when needed)
 
-* When access to primary EC2 was lost, root volume was detached and attached to secondary EC2 as secondary disk
-* Used `lsblk` to identify new volume (e.g., `/dev/nvme1n1`)
-![lsblk](./img/lsblk.png)
+- When access to primary EC2 was lost, root volume was detached and attached to secondary EC2 as secondary disk
+- Used `lsblk` to identify new volume (e.g., `/dev/nvme1n1`)
+  ![lsblk](./img/lsblk.png)
 
-
-* Mounted volume and copied project files from lost instance
+- Mounted volume and copied project files from lost instance
 
 ```bash
 sudo mkdir /mnt/recovery
@@ -297,24 +285,25 @@ sudo mount /dev/nvme1n1p1 /mnt/recovery
 sudo cp -r /mnt/recovery/home/ubuntu/introduction-to-ci-cd ~/introduction-to-ci-cd
 ```
 
-* 📷 ![mount](./img/mntt.png)
+- 📷 ![mount](./img/mntt.png)
 
 ---
 
 ### 3. Add GitHub Secrets
 
-| Secret                                                                             | Purpose                         |
-| ---------------------------------------------------------------------------------- | ------------------------------- |
-| `EC2_SSH_KEY`                                                                      | Private SSH key                 |
-| `EC2_HOST`                                                                         | Public IP of EC2                |
-| `GHCR_PAT`                                                                         | GitHub Container Registry Token |
+| Secret        | Purpose                         |
+| ------------- | ------------------------------- |
+| `EC2_SSH_KEY` | Private SSH key                 |
+| `EC2_HOST`    | Public IP of EC2                |
+| `GHCR_PAT`    | GitHub Container Registry Token |
+
 |
 
-* 📷 ![ec2-secret](./img/secret-updated.png) 
- 
-* 📷 ![secrets](./img/04.secrets-added.png)
- 
-* 📷 ![ghcr](./img/ghcrtoken.png)                                |
+- 📷 ![ec2-secret](./img/secret-updated.png)
+
+- 📷 ![secrets](./img/04.secrets-added.png)
+
+- 📷 ![ghcr](./img/ghcrtoken.png) |
 
 ---
 
@@ -340,18 +329,18 @@ deploy:
           docker run -d --name node-app -p 80:3000 ghcr.io/techytobii/introduction-to-ci-cd:latest
 ```
 
-* 📷 ![deployed](./img/ec2-automation-success.png)
+- 📷 ![deployed](./img/ec2-automation-success.png)
 
 ---
 
 ### 5. Test Deployment
 
-* Open browser: `http://http://16.170.240.9/`
-* Expected message:
+- Open browser: `http://http://16.170.240.9/`
+- Expected message:
 
 > Welcome to Node.js CI/CD!
 
-* 📷 ![web-message](./img/node-js.png)
+- 📷 ![web-message](./img/node-js.png)
 
 ---
 
@@ -359,20 +348,17 @@ deploy:
 
 **Challenge 1:** Docker permission error from GitHub Actions SSH
 
-
-* 📷 ![ssherror](./img//ssh-error.png)
+- 📷 ![ssherror](./img//ssh-error.png)
 
 **Fix:** Added EC2 user to Docker group using `sudo usermod -aG docker ubuntu` and rebooted
 
 **Challenge 2:** EC2 SSH access lost after reboot
 
-
-* 📷 ![ssherror](./img//ssh-error.png)
+- 📷 ![ssherror](./img//ssh-error.png)
 
 **Fix:** Used secondary EC2 to recover root volume, mounted disk, and copied project files
 
 ---
-
 
 **Prepared by:** Samuel Oluwatobi Olofinkuade
 **Date:** July 1, 2025

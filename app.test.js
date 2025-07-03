@@ -1,10 +1,10 @@
-const request = require('supertest');
-const app = require('./app');
+const request = require("supertest");
+const app = require("./app");
 
-describe('GET /', () => {
-  it('responds with CI/CD is awesome!', async () => {
-    const res = await request(app).get('/');
+describe("GET /", () => {
+  it("responds with CI/CD is awesome!", async () => {
+    const res = await request(app).get("/");
     expect(res.statusCode).toBe(200);
-    expect(res.text).toBe('CI/CD is awesome!');
+    expect(res.text).toBe("CI/CD is awesome!");
   });
 });
