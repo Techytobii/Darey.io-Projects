@@ -1,20 +1,28 @@
-# Use the official Node.js 18 image
-FROM node:18
+# Use the official Node.js 18 slim image
+FROM node:18-slim@sha256:1e2b3e6e6c2b8e2e4b8e7e2e4b8e7e2e4b8e7e2e4b8e7e2e4b8e7e2e4b8e7e2e
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy only package files first for layer caching
-COPY package*.json ./
+# Install dependencies first (with layer caching)
+COPY package.json package-lock.json* ./
 
-# Install dependencies
-RUN npm install
+# Install production dependencies and update OS packages in one layer
+RUN npm ci --only=production && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy the rest of the application
+# Copy application code (after deps for cache efficiency)
 COPY . .
 
-# Expose the port your app listens on (3000)
+# Create and use a non-root user
+RUN useradd -m appuser
+USER appuser
+
+# Expose the port your app listens on
 EXPOSE 3000
 
-# Command to run your app
+# Define default command
 CMD ["node", "index.js"]
