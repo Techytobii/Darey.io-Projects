@@ -1,5 +1,5 @@
 # Use the official Node.js 18 slim image
-FROM node:18-slim@sha256:1e2b3e6e6c2b8e2e4b8e7e2e4b8e7e2e4b8e7e2e4b8e7e2e4b8e7e2e4b8e7e2e
+FROM node:18
 
 # Set working directory
 WORKDIR /app
