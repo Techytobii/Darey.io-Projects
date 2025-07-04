@@ -1,28 +1,28 @@
-# Use the official Node.js 18 slim image (latest patch) for fewer vulnerabilities
+# 📦 Use official Node.js 18 slim image (latest patch, smaller surface)
 FROM node:18-slim
 
-# Set working directory
+# 🗂️ Set working directory inside container
 WORKDIR /app
 
-# Install dependencies first (with layer caching)
+# 📄 Copy dependency manifests first (to leverage layer caching)
 COPY package.json package-lock.json* ./
 
-# Install production dependencies and update OS packages in one layer
+# 🔧 Install OS updates, minimal tools & production dependencies
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends ca-certificates && \
     rm -rf /var/lib/apt/lists/* && \
     npm ci --only=production
 
-# Copy application code (after deps for cache efficiency)
+# 📝 Copy application source code
 COPY . .
 
-# Create and use a non-root user
-RUN useradd -m -s /bin/bash appuser
+# 👤 Create and switch to a non-root user for security
+RUN useradd --create-home --shell /bin/bash appuser
 USER appuser
 
-# Expose the port your app listens on
+# 🚪 Expose the port your app will listen on
 EXPOSE 3000
 
-# Define default command
+# 🚀 Default container command
 CMD ["node", "index.js"]
