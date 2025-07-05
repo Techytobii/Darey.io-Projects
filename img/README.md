@@ -1,8 +1,6 @@
 # 📄 IMPLEMENTING CONTINOUS INTEGRATIPON
 
-## 📘 Title
-
-**CI/CD Pipeline for Node.js Application with GitHub Actions, Docker, and AWS EC2**
+## 📘 **CI/CD Pipeline for Node.js Application with GitHub Actions, Docker, and AWS EC2**
 
 ---
 
@@ -57,49 +55,73 @@ Developer → GitHub Repo → GitHub Actions → Build → Lint/Test → SonarCl
 
 ### Pipeline Diagram:
 
-*(Insert pipeline diagram here)*
 
-> 🖼️ **\[Pipeline Diagram Screenshot]**
+>> * 🖼️![pipeline](./code-checks-img/pipelinescch.png)
 
 ---
 
 ## 🧪 Project Setup
 
-### 1️⃣ Clone the Repo
+### 1️⃣ Creatd the repo
+
+>> * 🖼️![repo-created](./01.repo-created.png)
+
+
+### 2️⃣ Clone the Repo
 
 ```bash
 git clone https://github.com/Techytobii/introduction-to-ci-cd.git
 cd introduction-to-ci-cd
 ```
 
-### 2️⃣ Install Dependencies
+>> * 🖼️![cloned-repo](./02.cloned-repo.png)
+
+
+### 3️⃣ Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3️⃣ Lint & Format Code
+>> * 🖼️![npm-install](./code-checks-img/npm-install.png)
+
+
+### 4️⃣ Lint & Format Code
 
 ```bash
 npm run lint
 npm run format
 ```
 
-### 4️⃣ Run Tests
+>> * 🖼️![run-lint](./code-checks-img/npm-run-lint.png)
+
+>> * 🖼️![run-formt](./code-checks-img/npm-format.png)
+
+
+
+### 5️⃣ Tests
 
 ```bash
 npm test
 ```
+
+>> * 🖼️![npm-test](./code-checks-img/npm-test.png)
+
+
 
 ### 5️⃣ Run Locally
 
 ```bash
 npm start
 ```
+>> * 🖼️![npm-start](./code-checks-img/npm-stRT.png)
 
-Visit: [http://localhost:3000](http://localhost:3000)
 
+
+ Visited: ![http://localhost:3000](./code-checks-img/lh3000.png) 
 ---
+
+
 
 ## 🚀 CI/CD Pipeline
 
@@ -133,11 +155,11 @@ jobs:
     …
 ```
 
-*(Insert YAML file screenshot here)*
 
-> 🖼️ **\[GitHub Actions Workflow Screenshot]**
+>> * 🖼️![workflow](./code-checks-img/ghworkflow.png)
 
 ---
+
 
 ## 📦 Docker
 
@@ -147,6 +169,12 @@ jobs:
 docker build -t intro-to-ci-cd .
 docker run -d -p 3000:3000 intro-to-ci-cd
 ```
+
+>> * 🖼️![docker](./docker-build-t.png)
+
+
+>> * 🖼️![docker-300](./code-checks-img/docker-3000.png)
+
 
 ---
 
@@ -161,11 +189,12 @@ ssh ubuntu@<EC2_IP>
 docker ps
 ```
 
-*(Insert browser & EC2 terminal screenshot here)*
+>> * 🖼️![ssh](./02.ssh-ubuntu.png)
 
-> 🖼️ **\[Deployed App Screenshot]**
 
+>> * 🖼️![docker-ps](./code-checks-img/docker-ps.png)
 ---
+
 
 ## 🧹 Tests
 
@@ -190,9 +219,8 @@ Run tests:
 npm test
 ```
 
-*(Insert test output screenshot here)*
+>> * 🖼️![npm-test](./code-checks-img/npm-test.png)
 
-> 🖼️ **\[Test Output Screenshot]**
 
 ---
 
@@ -217,15 +245,15 @@ npm test
 
 ## 📸 Screenshots
 
-> 🎯 Replace the placeholders below with actual screenshots from your project.
+
 
 | Screenshot Description            | Screenshot                           |
 | --------------------------------- | ------------------------------------ |
-| GitHub Actions Workflow Passing   | 🖼️ ![](./docs/pipeline-success.png) |
-| App Running in Browser (EC2)      | 🖼️ ![](./docs/app-browser.png)      |
-| ESLint & Prettier Running Locally | 🖼️ ![](./docs/lint-format.png)      |
-| Tests Running                     | 🖼️ ![](./docs/tests-output.png)     |
-
+| GitHub Actions Workflow Passing   | 🖼️ ![success](./code-checks-img/success.png) |
+| App Running in Browser (EC2)      | 🖼️ ![app-running](./code-checks-img/02.png)
+| ESLint & Prettier Running Locally | 🖼️ ![eslint](./code-checks-img/eslint-file.png)      |
+| Tests Running                     | 🖼️ ![tests](./code-checks-img/ci-cd-builddd.png)     | 
+| Sonar Cloud | 🖼️![sonar-cloud](./code-checks-img/sonaar.png)
 ---
 
 ## 🙏 Author
